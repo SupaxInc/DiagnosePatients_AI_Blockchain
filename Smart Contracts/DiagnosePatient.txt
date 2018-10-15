@@ -1,0 +1,98 @@
+pragma solidity ^0.4.25;
+
+
+contract AIDiagnosis{
+    
+    bytes32[] public symptoms;
+    bytes32[] public diseases;
+    
+    //NOTE: Use IPFS to save images to Ethereum blockchain
+    
+    function addSymptoms(bytes32 symptom) public{   // adding symptoms to symptoms array
+        symptoms.push(symptom);
+    }
+    
+    function checkSymptoms() public constant returns (bytes32[]) {
+        return symptoms;
+    }
+    
+    function addDiseases(bytes32 disease) public {    // adding diseases to disease array
+        diseases.push(disease);
+    }
+    
+    function checkDiseases() public constant returns (bytes32[]) {
+        return diseases;
+    }
+    
+    // function diagnosePatient() public {
+    //     // function to diagnose patient
+    // }
+    
+}
+
+
+contract Patient{
+    AIDiagnosis diagnosis = new AIDiagnosis();
+    
+    // NOTES:
+    // CHANGE PATIENTS TO STRUCTURES AND ADD THE STRUCT TO ARRAY
+    // Map instead of using arrays to protect for DOS attacks
+    // MAYBE SAVE PATIENT ID, AND ON DAPP SHOW PATIENT #, to ACCESS SPECIFIC PATIENTS
+    
+    struct PatientData {
+        address Address;
+        uint payment;    // patient may pay for their diagnosis (idea)
+        bytes32[] symptoms;  
+        // maybe add patient measurements
+        uint id;
+    }
+    
+    
+    
+    uint public nextPatientId;     // unique identifier for each patients
+    mapping(uint256 => PatientData) public patients;
+    
+    function registerPatient() public {
+        // require function might need to be changed for Organization address as well
+        // require(patientAddress == address(0), "Patient is already registered already.");
+        // If require function becomes false, then it rollbacks to previous version.
+        
+        PatientData patient = patients[nextPatientId];  // nextPatientId mapped as _KeyType, patient is _ValueType
+        patient.Address = msg.sender;    // whoever invoked this function will be the patients address
+        patient.id = nextPatientId;
+        nextPatientId++;
+    }
+    
+    function checkPayment(uint patientId) public returns (bool hasPaid) {
+        PatientData patient = patients[patientId];  // use of var keyword is deprecated so use actual type
+        if (patient.payment != 0) {
+            return hasPaid = true;
+        } else {
+            return hasPaid = false;
+        }
+    }
+    
+    function checkPatientAddress(uint patientId) public returns (address patientAddress) {
+        PatientData patient = patients[patientId];
+        return patientAddress = patient.Address;
+    }
+    
+    function payDiagnosis(uint patientId) public payable {     // payable function used to receive payments (ethereum)
+        require(msg.sender == checkPatientAddress(patientId));  // checks if the patient paying is the right address
+        PatientData patient = patients[patientId];
+        patient.payment += msg.value;   // adds the amount of ether sent to the function to the payment property
+    }
+    
+    function findDiagnosis(uint patientId) public {   // function to find the patient's diagnosis
+        //require(checkPayment(patientId), "Patient must pay first.");  // checks if patient has paid 
+        // PatientData patient = patients[patientId];
+        // diagnosis.diagnosePatient(patient);
+    }
+    
+    function addPatientSymptoms(uint patientId, bytes32[] _symptoms) public {    // adds the patients symptoms
+        PatientData patient = patients[patientId];
+        patient.symptoms = _symptoms;
+    }
+    
+}
+
