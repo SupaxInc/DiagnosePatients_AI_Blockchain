@@ -38,6 +38,7 @@ contract AIDiagnosis{
     );
     
     constructor() public {    // internal keyword will only let function be called within or from derived contracts
+        require(msg.sender != address(0), "Sender address is empty");
         OrganizationData organization = organizations[msg.sender];
         organization.Address = msg.sender;
         organization.hasPermissions = true;
