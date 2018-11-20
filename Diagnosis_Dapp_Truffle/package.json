@@ -1,0 +1,31 @@
+{
+  "name": "Diagnosis_Dapp_Truffle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@ledgerhq/hw-transport-u2f": "^4.28.0",
+    "@ledgerhq/web3-subprovider": "^4.28.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.1",
+    "json-loader": "^0.5.7",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "style-loader": "^0.23.1",
+    "web3": "^1.0.0-beta.36",
+    "web3-provider-engine": "^14.1.0",
+    "webpack": "^4.26.0"
+  }
+}

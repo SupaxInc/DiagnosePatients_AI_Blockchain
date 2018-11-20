@@ -5,6 +5,7 @@ import ProviderEngine from "web3-provider-engine";
 import RpcSubprovider from "web3-provider-engine/subproviders/rpc";
 
 const contract_address = "0xC94747C5cf4Fd9d0Fbd000E61A3d15B8C9e9440D";
+// Smart Contract ABI found in Remix Solidity IDE
 const abi = [
     {
         "anonymous": false,
@@ -449,6 +450,7 @@ let my_web3;		// Replacing Web3 object Metamask provides with this.
 let account;		// Variable will allow us to block any attempt to create a transaction.
 const rpcUrl = "https://ropsten.infura.io";
 let contract;
+
 
 /* 
     Event listener load is used since Metamask adds a web3 object to page before 'load'
